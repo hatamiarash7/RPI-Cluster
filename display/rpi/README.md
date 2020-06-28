@@ -10,5 +10,5 @@ python3 test.py -d sh1106 -i spi --width 128 --height 64
 
 ```bash
 docker build -t rpi-cluster/display .
-docker run --privileged -d rpi-cluster/display:latest
+docker run --privileged -d --name oled --restart=unless-stopped rpi-cluster/display:latest
 ```
