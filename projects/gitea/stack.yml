@@ -7,7 +7,6 @@ networks:
 services:
   server:
     image: 192.168.1.25:5000/gitea:1.12.1
-    restart: always
     environment:
       - USER_UID=1000
       - USER_GID=1000
@@ -39,7 +38,6 @@ services:
 
   db:
     image: 192.168.1.25:5000/db/mysql:5.7.30
-    restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=gitea
       - MYSQL_USER=gitea
