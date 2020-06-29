@@ -1,0 +1,51 @@
+version: "3"
+
+services:
+  traefik:
+    image: traefik:v2.2.1
+    command:
+      - "--log=true"
+      - "--log.level=WARNING"
+      - "--api=true"
+      - "--api.debug=true"
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.swarmmode=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.swarmmoderefreshseconds=10"
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      - "--providers.docker.watch=true"
+      - "--providers.docker.network=traefik"
+      - "--entrypoints.web.address=:80"
+      - "--metrics.prometheus=true"
+      - "--metrics.prometheus.addEntryPointsLabels=true"
+      - "--metrics.prometheus.addServicesLabels=true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - traefik
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik"
+        # Dashboard
+        - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.cluster`)"
+        - "traefik.http.routers.traefik-dashboard.entrypoints=web"
+        - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=80"
+        # Prometheus
+        - "traefik.http.routers.prometheus.rule=(Host(`traefik.cluster`) && PathPrefix(`/metrics`))"
+        - "traefik.http.routers.prometheus.service=prometheus@internal"
+        - "traefik.http.routers.prometheus.entrypoints=web"
+      mode: global
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  traefik:
+    external: true
