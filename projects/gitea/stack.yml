@@ -27,8 +27,7 @@ services:
     networks:
       - gitea
     deploy:
-      mode: replicated
-      replicas: 1
+      mode: global
       placement:
         constraints: [node.role == manager]
       restart_policy:
@@ -50,8 +49,7 @@ services:
         source: /var/docker/gitea-mysql
         target: /var/lib/mysql
     deploy:
-      mode: replicated
-      replicas: 1
+      mode: global
       placement:
         constraints: [node.name == node1.cluster]
       restart_policy:
