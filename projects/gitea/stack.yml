@@ -44,9 +44,9 @@ services:
         source: /var/docker/gitea-db
         target: /var/lib/postgresql/data
     deploy:
-      mode: global
+      replicas: 1
       placement:
-        constraints: [node == node1.cluster]
+        constraints: [node.labels.node == 1]
       restart_policy:
         delay: 10s
         max_attempts: 10
