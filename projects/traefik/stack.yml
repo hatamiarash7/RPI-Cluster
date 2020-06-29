@@ -30,10 +30,12 @@ services:
     deploy:
       labels:
         - "traefik.enable=true"
+        - "traefik.docker.network=traefik"
         # Dashboard
         - "traefik.http.routers.traefik.rule=Host(`traefik.cluster`)"
         - "traefik.http.routers.traefik.service=api@internal"
         - "traefik.http.routers.traefik.entrypoints=web"
+        - "traefik.http.services.traefik.loadbalancer.server.port=8080"
         # Prometheus
         - "traefik.http.routers.prometheus.rule=(Host(`traefik.cluster`) && PathPrefix(`/metrics`))"
         - "traefik.http.routers.prometheus.service=prometheus@internal"
