@@ -1,12 +1,8 @@
 version: "3.7"
 
-networks:
-  gitea:
-    external: false
-
 services:
   server:
-    image: 192.168.1.25:5000/gitea:1.12.1
+    image: kunde21/gitea-arm:v1.12.1
     environment:
       - USER_UID=1000
       - USER_GID=1000
@@ -36,18 +32,17 @@ services:
         window: 60s
 
   db:
-    image: 192.168.1.25:5000/db/mysql:5.7.30
+    image: postgres:9.6.18-alpine
     environment:
-      - MYSQL_ROOT_PASSWORD=gitea
-      - MYSQL_USER=gitea
-      - MYSQL_PASSWORD=gitea
-      - MYSQL_DATABASE=gitea
+      - POSTGRES_USER=gitea
+      - POSTGRES_PASSWORD=gitea
+      - POSTGRES_DB=gitea
     networks:
       - gitea
     volumes:
       - type: bind
-        source: /var/docker/gitea-mysql
-        target: /var/lib/mysql
+        source: /var/docker/gitea-db
+        target: /var/lib/postgresql/data
     deploy:
       mode: global
       placement:
@@ -56,3 +51,7 @@ services:
         delay: 10s
         max_attempts: 10
         window: 60s
+
+networks:
+  gitea:
+    external: false
