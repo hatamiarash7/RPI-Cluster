@@ -6,7 +6,7 @@ networks:
 
 services:
   server:
-    image: gitea/gitea:1.11.3
+    image: 192.168.1.25:5000/gitea:1.12.1
     restart: always
     environment:
       - USER_UID=1000
@@ -20,9 +20,11 @@ services:
       - RUN_MODE=dev
       - DISABLE_SSH=true
     volumes:
-      - gitea-data:/data
+      - type: bind
+        source: /var/docker/gitea-server
+        target: /data
     ports:
-      - "3000:3000"
+      - 3001:3001
     networks:
       - gitea
     deploy:
@@ -36,7 +38,7 @@ services:
         window: 60s
 
   db:
-    image: mysql:5.7
+    image: 192.168.1.25:5000/db/mysql:5.7.30
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=gitea
@@ -46,7 +48,9 @@ services:
     networks:
       - gitea
     volumes:
-      - mysql-data:/var/lib/mysql
+      - type: bind
+        source: /var/docker/gitea-mysql
+        target: /var/lib/mysql
     deploy:
       mode: replicated
       replicas: 1
@@ -56,9 +60,3 @@ services:
         delay: 10s
         max_attempts: 10
         window: 60s
-
-volumes:
-  gitea-data:
-    driver: local
-  mysql-data:
-    driver: local
