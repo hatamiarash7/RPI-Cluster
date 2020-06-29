@@ -7,7 +7,7 @@ Deploy Gitea server in Docker Swarm
 Set server's options ( [more info](https://docs.gitea.io/en-us/install-with-docker/#environments-variables) ) and run the server :
 
 ```shell
-docker stack deploy --with-registry-auth -c stack.yml Gitea
+docker stack deploy -c stack.yml Gitea
 ```
 
 Access gitea from **swarm-ip:3000** and install server via Register link
