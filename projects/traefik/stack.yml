@@ -25,6 +25,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - traefik
+    ports:
+      - 80:80
     deploy:
       labels:
         - "traefik.enable=true"
