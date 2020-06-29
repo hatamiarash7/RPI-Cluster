@@ -6,14 +6,15 @@ services:
     environment:
       - USER_UID=1000
       - USER_GID=1000
-      - DB_TYPE=mysql
-      - DB_HOST=db:3306
+      - DB_TYPE=postgres
+      - DB_HOST=db:5432
       - DB_NAME=gitea
       - DB_USER=gitea
       - DB_PASSWD=gitea
       - APP_NAME="Git Server"
       - RUN_MODE=dev
       - DISABLE_SSH=true
+      - DOMAIN=manager.cluster
     volumes:
       - type: bind
         source: /var/docker/gitea-server
