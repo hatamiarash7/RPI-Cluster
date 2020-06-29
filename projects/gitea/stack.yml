@@ -46,7 +46,7 @@ services:
     deploy:
       mode: global
       placement:
-        constraints: [node.name == node1.cluster]
+        constraints: [node == node1.cluster]
       restart_policy:
         delay: 10s
         max_attempts: 10
