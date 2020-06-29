@@ -19,11 +19,17 @@ services:
       - type: bind
         source: /var/docker/gitea-server
         target: /data
-    ports:
-      - 3001:3000
     networks:
       - gitea
+      - traefik
     deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik"
+        - "traefik.http.routers.gitea.rule=Host(`git.cluster`)"
+        - "traefik.http.routers.gitea.service=api@internal"
+        - "traefik.http.routers.gitea.entrypoints=web"
+        - "traefik.http.services.gitea.loadbalancer.server.port=3000"
       mode: global
       placement:
         constraints: [node.role == manager]
@@ -56,3 +62,5 @@ services:
 networks:
   gitea:
     external: false
+  traefik:
+    external: true
