@@ -32,7 +32,7 @@ services:
         # Dashboard
         - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.cluster`)"
         - "traefik.http.routers.traefik-dashboard.entrypoints=web"
-        - "traefik.http.routers.traefik.service=api@internal"
+        - "traefik.http.routers.traefik-dashboard.service=api@internal"
         - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=80"
         # Prometheus
         - "traefik.http.routers.prometheus.rule=(Host(`traefik.cluster`) && PathPrefix(`/metrics`))"
