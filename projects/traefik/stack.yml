@@ -25,15 +25,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - traefik
+    ports:
+      - 80:80
     deploy:
       labels:
         - "traefik.enable=true"
-        - "traefik.docker.network=traefik"
         # Dashboard
-        - "traefik.http.routers.traefik-dashboard.rule=Host(`traefik.cluster`)"
-        - "traefik.http.routers.traefik-dashboard.entrypoints=web"
-        - "traefik.http.routers.traefik-dashboard.service=api@internal"
-        - "traefik.http.services.traefik-dashboard.loadbalancer.server.port=80"
+        - "traefik.http.routers.traefik.rule=Host(`traefik.cluster`)"
+        - "traefik.http.routers.traefik.service=api@internal"
+        - "traefik.http.routers.traefik.entrypoints=web"
         # Prometheus
         - "traefik.http.routers.prometheus.rule=(Host(`traefik.cluster`) && PathPrefix(`/metrics`))"
         - "traefik.http.routers.prometheus.service=prometheus@internal"
