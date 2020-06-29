@@ -20,7 +20,7 @@ services:
         source: /var/docker/gitea-server
         target: /data
     ports:
-      - 3001:3001
+      - 3001:3000
     networks:
       - gitea
     deploy:
