@@ -7,3 +7,5 @@ The whoami service for test node & Traefik load-balancing
 ```bash
 docker stack deploy -c stack.yml WhoAmI
 ```
+
+Go to http://whoami.cluster/ and check `Hostname` after each refresh
