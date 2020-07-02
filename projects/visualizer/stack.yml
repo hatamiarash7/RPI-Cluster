@@ -2,7 +2,8 @@ version: "3.7"
 
 services:
   visualizer:
-    image: alexellis2/visualizer-arm
+    image: 192.168.1.25:5000/visualizer-arm
+    #image: alexellis2/visualizer-arm
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
