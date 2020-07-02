@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+  visualizer:
+    image: alexellis2/visualizer-arm
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - traefik
+    deploy:
+      labels:
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik"
+        - "traefik.http.routers.whoami.rule=Host(`swarm.cluster`)"
+        - "traefik.http.routers.whoami.entrypoints=web"
+        - "traefik.http.routers.whoami.service=whoami"
+        - "traefik.http.services.whoami.loadbalancer.server.port=8080"
+      mode: global
+      placement:
+        constraints: [node.role == manager]
+
+networks:
+  traefik:
+    external: true
