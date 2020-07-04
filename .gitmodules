@@ -1,3 +1,0 @@
-[submodule "projects/faas"]
-	path = projects/faas
-	url = https://github.com/openfaas/faas
