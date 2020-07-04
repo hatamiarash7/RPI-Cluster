@@ -51,18 +51,4 @@ else
   echo ""
 fi
 
-arch=$(uname -m)
-case "$arch" in
-
-"armv7l") echo "Deploying OpenFaaS core services for ARM"
-          composefile="stack.yml"
-          ;;
-"aarch64") echo "Deploying OpenFaaS core services for ARM64"
-          composefile="docker-compose.arm64.yml"
-          ;;
-*) echo "Deploying OpenFaaS core services"
-   composefile="docker-compose.yml"
-   ;;
-esac
-
-docker stack deploy func --compose-file $composefile
+docker stack deploy -c stack.yml OpenFaaS
