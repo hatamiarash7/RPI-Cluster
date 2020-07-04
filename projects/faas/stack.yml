@@ -25,7 +25,7 @@ services:
       auth_proxy_pass_body: "false"
     deploy:
       resources:
-        limits: # Enable if you want to limit memory usage
+        limits:
           memory: 200M
         reservations:
           memory: 100M
@@ -41,7 +41,6 @@ services:
       - basic-auth-user
       - basic-auth-password
 
-  # auth service provide basic-auth plugin for system APIs
   basic-auth-plugin:
     image: 192.168.1.25:5000/openfaas/basic-auth-plugin:0.18.17-armhf
     networks:
@@ -56,7 +55,7 @@ services:
           - "node.role == manager"
           - "node.platform.os == linux"
       resources:
-        limits: # Enable if you want to limit memory usage
+        limits:
           memory: 100M
         reservations:
           memory: 50M
@@ -69,7 +68,6 @@ services:
       - basic-auth-user
       - basic-auth-password
 
-  # Docker Swarm provider
   faas-swarm:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
@@ -88,7 +86,7 @@ services:
           - "node.role == manager"
           - "node.platform.os == linux"
       resources:
-        limits: # Enable if you want to limit memory usage
+        limits:
           memory: 100M
         reservations:
           memory: 100M
@@ -149,10 +147,6 @@ services:
     secrets:
       - basic-auth-user
       - basic-auth-password
-
-  # End services
-
-  # Start monitoring
 
   prometheus:
     image: prom/prometheus:v2.19.2
