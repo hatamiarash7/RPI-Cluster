@@ -25,8 +25,8 @@ services:
       auth_proxy_pass_body: "false"
     deploy:
       resources:
-        # limits:   # Enable if you want to limit memory usage
-        #     memory: 200M
+        limits: # Enable if you want to limit memory usage
+          memory: 200M
         reservations:
           memory: 100M
       restart_policy:
@@ -56,8 +56,8 @@ services:
           - "node.role == manager"
           - "node.platform.os == linux"
       resources:
-        # limits:   # Enable if you want to limit memory usage
-        #     memory: 100M
+        limits: # Enable if you want to limit memory usage
+          memory: 100M
         reservations:
           memory: 50M
       restart_policy:
@@ -88,8 +88,8 @@ services:
           - "node.role == manager"
           - "node.platform.os == linux"
       resources:
-        # limits:   # Enable if you want to limit memory usage
-        #     memory: 100M
+        limits: # Enable if you want to limit memory usage
+          memory: 100M
         reservations:
           memory: 100M
       restart_policy:
