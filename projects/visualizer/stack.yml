@@ -12,10 +12,10 @@ services:
       labels:
         - "traefik.enable=true"
         - "traefik.docker.network=traefik"
-        - "traefik.http.routers.whoami.rule=Host(`swarm.cluster`)"
-        - "traefik.http.routers.whoami.entrypoints=web"
-        - "traefik.http.routers.whoami.service=whoami"
-        - "traefik.http.services.whoami.loadbalancer.server.port=8080"
+        - "traefik.http.routers.visualizer.rule=Host(`swarm.cluster`)"
+        - "traefik.http.routers.visualizer.entrypoints=web"
+        - "traefik.http.routers.visualizer.service=visualizer"
+        - "traefik.http.services.visualizer.loadbalancer.server.port=8080"
       mode: global
       placement:
         constraints: [node.role == manager]
