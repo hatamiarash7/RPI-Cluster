@@ -36,6 +36,7 @@ echo "$secret" | docker secret create basic-auth-password -
 if [ $? = 0 ];
 then
   printf "[Credentials]\n username: admin \n password: $secret\n echo -n ""$secret"" | faas-cli login --username=admin --password-stdin"
+  echo $secret > password 
 else
   printf "[Credentials]\n already exist, not creating"
 fi
