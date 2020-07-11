@@ -18,8 +18,7 @@ services:
         reservations:
           memory: 256M
       placement:
-        constraints:
-          - node.role == manager
+        constraints: [node.role == manager]
       labels:
         - "traefik.enable=true"
         - "traefik.docker.network=traefik"
@@ -34,6 +33,8 @@ services:
     networks:
       - net
     deploy:
+      placement:
+        constraints: [node.labels.node == 1]
       resources:
         limits:
           memory: 256M
@@ -47,6 +48,8 @@ services:
     networks:
       - net
     deploy:
+      placement:
+        constraints: [node.labels.node == 2]
       resources:
         limits:
           memory: 256M
