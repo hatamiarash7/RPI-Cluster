@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   server:
-    image: kunde21/gitea-arm:v1.12.1
+    image: kunde21/gitea-arm:v1.12.4
     environment:
       - USER_UID=1000
       - USER_GID=1000
@@ -12,13 +12,18 @@ services:
       - DB_USER=gitea
       - DB_PASSWD=gitea
       - APP_NAME="Git Server"
-      - RUN_MODE=dev
-      - DISABLE_SSH=true
+      - RUN_MODE=prod
       - DOMAIN=manager.cluster
+      - HTTP_PORT=80
+      - SSH_DOMAIN=manager.cluster
+      - SSH_PORT=2210
+      - DISABLE_REGISTRATION=true
     volumes:
       - type: bind
         source: /var/docker/gitea-server
         target: /data
+    ports:
+      - 2210:2210
     networks:
       - gitea
       - traefik
