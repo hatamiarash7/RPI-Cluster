@@ -1,12 +1,14 @@
 # Configure OLED display
 
-### Normal
+This project will configure OLED display of cluster
+
+## Normal
 
 ```bash
 python3 test.py -d sh1106 -i spi --width 128 --height 64
 ```
 
-### Docker
+## Docker
 
 ```bash
 docker build -t rpi-cluster/display .
