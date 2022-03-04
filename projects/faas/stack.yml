@@ -3,7 +3,7 @@ services:
   gateway:
     ports:
       - 8080:8080
-    image: 192.168.1.25:5000/openfaas/gateway:0.18.17-armhf
+    image: 188.121.121.138:5000/openfaas/gateway:0.20.2-armhf
     networks:
       - functions
     environment:
@@ -42,7 +42,7 @@ services:
       - basic-auth-password
 
   basic-auth-plugin:
-    image: 192.168.1.25:5000/openfaas/basic-auth-plugin:0.18.17-armhf
+    image: 188.121.121.138:5000/openfaas/basic-auth-plugin:0.20.2-armhf
     networks:
       - functions
     environment:
@@ -70,7 +70,7 @@ services:
   faas-swarm:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    image: 192.168.1.25:5000/openfaas/faas-swarm:0.8.5-armhf
+    image: 188.121.121.138:5000/openfaas/faas-swarm:0.9.0-armhf
     networks:
       - functions
     environment:
@@ -98,7 +98,7 @@ services:
       - basic-auth-password
 
   nats:
-    image: nats-streaming:0.18.0
+    image: 188.121.121.138:5000/nats-streaming:0.24.2
     # Uncomment the following port mappings if you wish to expose the
     # NATS client and/or management ports you must also add `-m 8222` to the command
     # ports:
@@ -118,7 +118,7 @@ services:
           - "node.platform.os == linux"
 
   queue-worker:
-    image: openfaas/queue-worker:0.11.2
+    image: 188.121.121.138:5000/openfaas/queue-worker:0.11.2
     networks:
       - functions
     environment:
@@ -147,7 +147,7 @@ services:
       - basic-auth-password
 
   prometheus:
-    image: prom/prometheus:v2.19.2
+    image: 188.121.121.138:5000/prom/prometheus:v2.33.3
     environment:
       no_proxy: "gateway"
     configs:
@@ -174,7 +174,7 @@ services:
           memory: 200M
 
   alertmanager:
-    image: prom/alertmanager:v0.21.0
+    image: 188.121.121.138:5000/prom/alertmanager:v0.23.0
     environment:
       no_proxy: "gateway"
     command:
