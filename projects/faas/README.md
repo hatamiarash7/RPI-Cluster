@@ -4,10 +4,11 @@
 
 OpenFaaS® makes it easy for developers to deploy event-driven functions and microservices to Kubernetes without repetitive, boiler-plate coding. Package your code or an existing binary in a Docker image to get a highly scalable endpoint with auto-scaling and metrics.
 
-### Install
+## Install
 
 ```bash
 $ ./deploy_stack.sh
+
 Creating network func_functions
 Creating service func_gateway
 Creating service func_prometheus
