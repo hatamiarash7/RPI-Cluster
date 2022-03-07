@@ -3,7 +3,7 @@ services:
   gateway:
     ports:
       - 8080:8080
-    image: 188.121.121.138:5000/openfaas/gateway:0.20.2-armhf
+    image: openfaas/gateway:0.18.17-armhf
     networks:
       - functions
     environment:
@@ -42,7 +42,7 @@ services:
       - basic-auth-password
 
   basic-auth-plugin:
-    image: 188.121.121.138:5000/openfaas/basic-auth-plugin:0.20.2-armhf
+    image: openfaas/basic-auth-plugin:0.18.17-armhf
     networks:
       - functions
     environment:
@@ -70,7 +70,7 @@ services:
   faas-swarm:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
-    image: 188.121.121.138:5000/openfaas/faas-swarm:0.9.0-armhf
+    image: openfaas/faas-swarm:0.8.5-armhf
     networks:
       - functions
     environment:
@@ -98,7 +98,7 @@ services:
       - basic-auth-password
 
   nats:
-    image: 188.121.121.138:5000/nats-streaming:0.24.2
+    image: nats-streaming:0.18.0
     # Uncomment the following port mappings if you wish to expose the
     # NATS client and/or management ports you must also add `-m 8222` to the command
     # ports:
@@ -118,7 +118,7 @@ services:
           - "node.platform.os == linux"
 
   queue-worker:
-    image: 192.168.1.24:5000/openfaas/queue-worker:0.11.2-armhf
+    image: openfaas/queue-worker:0.11.2
     networks:
       - functions
     environment:
@@ -146,69 +146,69 @@ services:
       - basic-auth-user
       - basic-auth-password
 
-  prometheus:
-    image: 188.121.121.138:5000/prom/prometheus:v2.33.3
-    environment:
-      no_proxy: "gateway"
-    configs:
-      - source: prometheus_config
-        target: /etc/prometheus/prometheus.yml
-      - source: prometheus_rules
-        target: /etc/prometheus/alert.rules.yml
-    command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
-    #   - '-storage.local.path=/prometheus'
-    ports:
-      - 9090:9090
-    networks:
-      - functions
-    deploy:
-      placement:
-        constraints:
-          - "node.role == manager"
-          - "node.platform.os == linux"
-      resources:
-        limits:
-          memory: 500M
-        reservations:
-          memory: 200M
+  # prometheus:
+  #   image: prom/prometheus:v2.19.2
+  #   environment:
+  #     no_proxy: "gateway"
+  #   configs:
+  #     - source: prometheus_config
+  #       target: /etc/prometheus/prometheus.yml
+  #     - source: prometheus_rules
+  #       target: /etc/prometheus/alert.rules.yml
+  #   command:
+  #     - "--config.file=/etc/prometheus/prometheus.yml"
+  #   #   - '-storage.local.path=/prometheus'
+  #   ports:
+  #     - 9090:9090
+  #   networks:
+  #     - functions
+  #   deploy:
+  #     placement:
+  #       constraints:
+  #         - "node.role == manager"
+  #         - "node.platform.os == linux"
+  #     resources:
+  #       limits:
+  #         memory: 500M
+  #       reservations:
+  #         memory: 200M
 
-  alertmanager:
-    image: 188.121.121.138:5000/prom/alertmanager:v0.23.0
-    environment:
-      no_proxy: "gateway"
-    command:
-      - "--config.file=/alertmanager.yml"
-      - "--storage.path=/alertmanager"
-    networks:
-      - functions
-    # Uncomment the following port mapping if you wish to expose the Prometheus
-    # Alertmanager UI.
-    # ports:
-    #     - 9093:9093
-    deploy:
-      resources:
-        limits:
-          memory: 50M
-        reservations:
-          memory: 20M
-      placement:
-        constraints:
-          - "node.role == manager"
-          - "node.platform.os == linux"
-    configs:
-      - source: alertmanager_config
-        target: /alertmanager.yml
-    secrets:
-      - basic-auth-password
+  # alertmanager:
+  #   image: prom/alertmanager:v0.21.0
+  #   environment:
+  #     no_proxy: "gateway"
+  #   command:
+  #     - "--config.file=/alertmanager.yml"
+  #     - "--storage.path=/alertmanager"
+  #   networks:
+  #     - functions
+  #   # Uncomment the following port mapping if you wish to expose the Prometheus
+  #   # Alertmanager UI.
+  #   # ports:
+  #   #     - 9093:9093
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         memory: 50M
+  #       reservations:
+  #         memory: 20M
+  #     placement:
+  #       constraints:
+  #         - "node.role == manager"
+  #         - "node.platform.os == linux"
+  #   configs:
+  #     - source: alertmanager_config
+  #       target: /alertmanager.yml
+  #   secrets:
+  #     - basic-auth-password
 
-configs:
-  prometheus_config:
-    file: ./prometheus/prometheus.yml
-  prometheus_rules:
-    file: ./prometheus/alert.rules.yml
-  alertmanager_config:
-    file: ./prometheus/alertmanager.yml
+# configs:
+#   prometheus_config:
+#     file: ./prometheus/prometheus.yml
+#   prometheus_rules:
+#     file: ./prometheus/alert.rules.yml
+#   alertmanager_config:
+#     file: ./prometheus/alertmanager.yml
 
 networks:
   functions:
