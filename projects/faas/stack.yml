@@ -118,7 +118,7 @@ services:
           - "node.platform.os == linux"
 
   queue-worker:
-    image: 188.121.121.138:5000/openfaas/queue-worker:0.11.2
+    image: 192.168.1.24:5000/openfaas/queue-worker:0.11.2-armhf
     networks:
       - functions
     environment:
